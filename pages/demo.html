@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Demo | SkillPath Navigator</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        /* Demo page specific styles */
+        .demo-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+            margin: 40px 0;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .profile-cards {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+            margin-bottom: 40px;
+        }
+        
+        .profile-card {
+            min-width: 260px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            border: 2px solid transparent;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .profile-card.active {
+            border-color: var(--primary-color);
+            background-color: rgba(67, 97, 238, 0.05);
+            transform: translateY(-5px);
+        }
+        
+        .profile-card.active::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-card.active::before {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            color: white;
+            font-size: 12px;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 15px;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        .profile-detail {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .profile-detail i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            min-width: 15px;
+        }
+        
+        .demo-result {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 30px;
+        }
+        
+        .profile-summary {
+            margin-bottom: 30px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .profile-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .recommendation-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .recommendation-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .match-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .match-badge span {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .career-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .career-title h3 {
+            margin-bottom: 0;
+            margin-right: 15px;
+        }
+        
+        .nsqf-badge {
+            background-color: #e9f5ff;
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .recommended-courses {
+            padding-left: 20px;
+        }
+        
+        .recommended-courses li {
+            margin-bottom: 10px;
+        }
+        
+        .demo-timeline {
+            position: relative;
+            margin: 30px 0;
+        }
+        
+        .demo-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 15px;
+            width: 2px;
+            background: var(--gradient-primary);
+        }
+        
+        .demo-timeline-item {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .demo-timeline-marker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+        }
+        
+        .demo-timeline-content {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: var(--border-radius);
+        }
+        
+        .demo-timeline-content h6 {
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .demo-timeline-content p {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <div class="logo-icon">
+                    <i class="fas fa-road"></i>
+                </div>
+                <span>SkillPath Navigator</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#testimonials">Success Stories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#about">About NCVET</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="assessment.html">Assessment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="demo.html">Demo</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-primary nav-btn" href="login.html">Login / Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1>Interactive Demo</h1>
+                    <p class="lead">Experience how our AI system generates personalized vocational pathways</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section>
+        <div class="container">
+            <div class="demo-container">
+                <div class="demo-header">
+                    <h2>Select a Sample Profile</h2>
+                    <p>Click on any profile to see how our AI system analyzes and recommends personalized training pathways.</p>
+                </div>
+                
+                <div class="profile-cards">
+                    <div class="profile-card active" data-profile="1">
+                        <div class="profile-image">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rahul Sharma">
+                        </div>
+                        <h4>Rahul Sharma</h4>
+                        <div class="profile-detail">
+                            <i class="fas fa-user-graduate"></i>
+                            <span>12th Standard</span>
+                        </div>
+                        <div class="profile-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Mumbai</span>
+                        </div>
+                        <div class="profile-detail">
+                            <i class="fas fa-laptop-code"></i>
+                            <span>Tech Enthusiast</span>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card" data-profile="2">
+                        <div class="profile-image">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Priya Patel">
+                        </div>
+                        <h4>Priya Patel</h4>
+                        <div class="profile-detail">
+                            <i class="fas fa-user-graduate"></i>
+                            <span>B.A. Graduate</span>
+                        </div>
+                        <div class="profile-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Delhi</span>
+                        </div>
+                        <div class="profile-detail">
+                            <i class="fas fa-palette"></i>
+                            <span>Creative Mind</span>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card" data-profile="3">
+                        <div class="profile-image">
+                            <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Amit Kumar">
+                        </div>
+                        <h4>Amit Kumar</h4>
+                        <div class="profile-detail">
+                            <i class="fas fa-user-graduate"></i>
+                            <span>ITI Mechanic</span>
+                        </div>
+                        <div class="profile-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Pune</span>
+                        </div>
+                        <div class="profile-detail">
+                            <i class="fas fa-cogs"></i>
+                            <span>Manufacturing</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-result">
+                    <!-- Results will be loaded dynamically with JavaScript -->
+                </div>
+                
+                <div class="text-center mt-4">
+                    <p>Want to see your own personalized pathway?</p>
+                    <a href="assessment.html" class="btn btn-primary">Take Your Assessment</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2>How Our AI System Works</h2>
+                    <p class="section-subtitle">A glimpse behind the technology that powers personalized guidance</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card text-center h-100">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>Data Collection</h3>
+                        <p>Gathers information about learner profiles, academic backgrounds, skills, and aspirations.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card text-center h-100">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>AI Analysis</h3>
+                        <p>Advanced algorithms process data to identify patterns and optimal learning pathways.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card text-center h-100">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <h3>NSQF Mapping</h3>
+                        <p>Aligns skills and aspirations with National Skills Qualifications Framework levels.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card text-center h-100">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <h3>Pathway Creation</h3>
+                        <p>Generates customized training journeys that adapt as learners progress.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Insights Section -->
+    <section>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h2>Technical Insights</h2>
+                    <p>Our AI guidance system leverages cutting-edge technologies to deliver accurate and personalized recommendations:</p>
+                    
+                    <ul class="mt-4">
+                        <li class="mb-3"><strong>Machine Learning Models:</strong> Trained on extensive vocational education and labor market data to predict optimal career paths.</li>
+                        <li class="mb-3"><strong>Natural Language Processing:</strong> Understands and processes learner inputs to extract meaningful insights about their aspirations.</li>
+                        <li class="mb-3"><strong>Recommendation Algorithms:</strong> Uses collaborative and content-based filtering to match learner profiles with suitable vocational pathways.</li>
+                        <li class="mb-3"><strong>Adaptive Learning:</strong> Continuously improves recommendations based on feedback and outcomes from previous learners.</li>
+                        <li class="mb-3"><strong>Real-time Labor Market Integration:</strong> Connects with employment databases to ensure recommendations align with current industry demands.</li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="p-4 bg-light rounded-4">
+                        <div class="code-block p-3 bg-dark text-light rounded-3" style="font-family: monospace;">
+                            <pre style="margin-bottom: 0;">
+# Simplified AI Algorithm Pseudocode
+<span style="color: #4cc9f0;">def</span> <span style="color: #4361ee;">generate_pathway</span>(learner_profile):
+    
+    <span style="color: #a5a58d;"># Analyze learner profile</span>
+    skills = analyze_skills(learner_profile)
+    aspirations = extract_aspirations(learner_profile)
+    context = get_socioeconomic_context(learner_profile)
+    
+    <span style="color: #a5a58d;"># Match with NSQF framework</span>
+    current_nsqf_level = map_to_nsqf(skills)
+    target_nsqf_level = calculate_target_level(aspirations)
+    
+    <span style="color: #a5a58d;"># Retrieve market data</span>
+    market_demands = get_labor_market_trends()
+    regional_opportunities = get_regional_data(context.location)
+    
+    <span style="color: #a5a58d;"># Generate pathways</span>
+    pathway_options = []
+    for career in match_careers(skills, aspirations):
+        if career.demand_score > threshold:
+            courses = recommend_courses(
+                current_level=current_nsqf_level,
+                target_level=target_nsqf_level,
+                career_path=career
+            )
+            pathway = create_timeline(courses, context)
+            pathway_options.append(pathway)
+    
+    <span style="color: #a5a58d;"># Sort by best match</span>
+    return sort_by_match_score(pathway_options)
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content text-center" data-aos="zoom-in">
+                <h2>Ready to Create Your Own Pathway?</h2>
+                <p>Take the assessment to receive AI-generated recommendations tailored to your unique profile and aspirations.</p>
+                <div class="mt-4">
+                    <a href="assessment.html" class="btn btn-primary btn-lg">Start Free Assessment</a>
+                    <a href="login.html" class="btn btn-light btn-lg ms-3">Create Account</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-about">
+                        <div class="footer-logo d-flex align-items-center">
+                            <div class="logo-icon">
+                                <i class="fas fa-road"></i>
+                            </div>
+                            <span>SkillPath Navigator</span>
+                        </div>
+                        <p>An AI-powered vocational guidance system developed for NCVET to help learners discover personalized training pathways.</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="../index.html#features">Features</a></li>
+                            <li><a href="../index.html#how-it-works">How It Works</a></li>
+                            <li><a href="../index.html#testimonials">Success Stories</a></li>
+                            <li><a href="../index.html#about">About NCVET</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">NSQF Framework</a></li>
+                            <li><a href="#">Career Guides</a></li>
+                            <li><a href="#">Training Centers</a></li>
+                            <li><a href="#">Certification Bodies</a></li>
+                            <li><a href="#">Industry Partners</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="footer-contact">
+                        <h4>Contact Us</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> NCVET Headquarters, New Delhi, India</p>
+                        <p><i class="fas fa-phone"></i> +91 11 2345 6789</p>
+                        <p><i class="fas fa-envelope"></i> support@skillpath.ncvet.gov.in</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>&copy; 2025 SkillPath Navigator. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="footer-bottom-links">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

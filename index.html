@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillPath Navigator | NCVET AI Guidance System</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <div class="logo-icon">
+                    <i class="fas fa-road"></i>
+                </div>
+                <span>SkillPath Navigator</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Success Stories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About NCVET</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/assessment.html">Assessment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/demo.html">Demo</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-primary nav-btn" href="pages/login.html">Login / Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
+                    <h1 class="display-4 fw-bold">Your AI Career Guide for <span class="highlight">Vocational Excellence</span></h1>
+                    <p class="lead my-4">Discover personalized training pathways aligned with your skills, aspirations, and industry demands. Navigate your journey to a successful career with AI-powered guidance.</p>
+                    <div class="hero-btns">
+                        <a href="pages/assessment.html" class="btn btn-primary btn-lg me-3">Start Your Journey</a>
+                        <a href="#how-it-works" class="btn btn-outline-secondary btn-lg">Learn How</a>
+                    </div>
+                    
+                    <div class="stats-row mt-5">
+                        <div class="stat-item">
+                            <h3>200+</h3>
+                            <p>Training Paths</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>50K+</h3>
+                            <p>Career Options</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>98%</h3>
+                            <p>Success Rate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="hero-image-container">
+                        <div class="floating-element element-1">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Personalized Learning</span>
+                        </div>
+                        <div class="floating-element element-2">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Career Growth</span>
+                        </div>
+                        <div class="floating-element element-3">
+                            <i class="fas fa-industry"></i>
+                            <span>Industry Aligned</span>
+                        </div>
+                        <div class="hero-image-wrapper">
+                            <svg viewBox="0 0 400 300" class="img-fluid hero-svg" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Background Circle -->
+                                <circle cx="200" cy="150" r="120" fill="rgba(67, 97, 238, 0.1)" stroke="rgba(67, 97, 238, 0.3)" stroke-width="2"/>
+                                
+                                <!-- Person Figure -->
+                                <circle cx="180" cy="80" r="15" fill="#4361ee"/>
+                                <rect x="170" y="95" width="20" height="35" rx="10" fill="#4361ee"/>
+                                <rect x="165" y="100" width="8" height="25" rx="4" fill="#4361ee"/>
+                                <rect x="187" y="100" width="8" height="25" rx="4" fill="#4361ee"/>
+                                <rect x="175" y="130" width="8" height="20" rx="4" fill="#4361ee"/>
+                                <rect x="182" y="130" width="8" height="20" rx="4" fill="#4361ee"/>
+                                
+                                <!-- Laptop/Computer -->
+                                <rect x="220" y="120" width="60" height="40" rx="5" fill="#6c757d"/>
+                                <rect x="225" y="125" width="50" height="30" rx="2" fill="#ffffff"/>
+                                <rect x="230" y="130" width="40" height="20" rx="1" fill="#e9ecef"/>
+                                <rect x="240" y="162" width="20" height="3" rx="1" fill="#6c757d"/>
+                                
+                                <!-- Books Stack -->
+                                <rect x="120" y="140" width="40" height="6" rx="2" fill="#28a745"/>
+                                <rect x="125" y="134" width="40" height="6" rx="2" fill="#ffc107"/>
+                                <rect x="130" y="128" width="40" height="6" rx="2" fill="#dc3545"/>
+                                
+                                <!-- Graduation Cap -->
+                                <path d="M160 60 L200 50 L240 60 L240 70 L200 60 L160 70 Z" fill="#212529"/>
+                                <rect x="195" y="45" width="10" height="15" fill="#212529"/>
+                                <circle cx="205" cy="48" r="3" fill="#ffc107"/>
+                                
+                                <!-- Growth Arrow -->
+                                <path d="M300 180 L320 160 L340 180 L320 170 L320 200 L320 170 Z" fill="#28a745" stroke="#28a745" stroke-width="2"/>
+                                
+                                <!-- Career Path Lines -->
+                                <path d="M80 200 Q 120 180 160 200 Q 200 220 240 200 Q 280 180 320 200" stroke="#4361ee" stroke-width="3" fill="none" stroke-dasharray="5,5"/>
+                                
+                                <!-- Skills Icons -->
+                                <circle cx="100" cy="100" r="12" fill="#17a2b8"/>
+                                <text x="100" y="105" text-anchor="middle" fill="white" font-size="10" font-family="Arial">💡</text>
+                                
+                                <circle cx="300" cy="100" r="12" fill="#fd7e14"/>
+                                <text x="300" y="105" text-anchor="middle" fill="white" font-size="10" font-family="Arial">⚙️</text>
+                                
+                                <!-- Target/Goal -->
+                                <circle cx="320" cy="80" r="20" fill="none" stroke="#28a745" stroke-width="3"/>
+                                <circle cx="320" cy="80" r="12" fill="none" stroke="#28a745" stroke-width="2"/>
+                                <circle cx="320" cy="80" r="5" fill="#28a745"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <h2>Empowering Features</h2>
+                <p class="section-subtitle">Our AI-powered platform offers comprehensive guidance through your skilling journey</p>
+            </div>
+            
+            <div class="row mt-5 g-4">
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>Profile Analysis</h3>
+                        <p>Comprehensive assessment of your academic background, skills, and socio-economic context to understand your starting point.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>AI Matching</h3>
+                        <p>Advanced algorithms match your profile with NSQF-aligned programs and current industry requirements.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <h3>Custom Pathways</h3>
+                        <p>Personalized training journeys including courses, micro-credentials, and on-the-job opportunities.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3>Labor Market Insights</h3>
+                        <p>Real-time data on job market trends, demand forecasts, and emerging skill requirements.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3>Progress Tracking</h3>
+                        <p>Monitor your learning journey with adaptive recommendations as you acquire new skills.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Industry Connect</h3>
+                        <p>Direct links to training providers, certification bodies, and potential employers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works-section">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <h2>How It Works</h2>
+                <p class="section-subtitle">Your journey to professional success in 4 simple steps</p>
+            </div>
+            
+            <div class="timeline" data-aos="fade-up">
+                <div class="timeline-item">
+                    <div class="timeline-dot">1</div>
+                    <div class="timeline-content" data-aos="fade-right">
+                        <h3>Create Your Profile</h3>
+                        <p>Enter your educational background, existing skills, and career aspirations to help our AI understand your starting point.</p>
+                        <div class="timeline-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot">2</div>
+                    <div class="timeline-content" data-aos="fade-left">
+                        <h3>Complete Assessment</h3>
+                        <p>Take our comprehensive skill and aptitude assessment to identify your strengths, learning style, and potential growth areas.</p>
+                        <div class="timeline-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot">3</div>
+                    <div class="timeline-content" data-aos="fade-right">
+                        <h3>Receive Recommendations</h3>
+                        <p>Get personalized training pathways mapped to NSQF levels, with courses, certifications, and practical training opportunities.</p>
+                        <div class="timeline-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot">4</div>
+                    <div class="timeline-content" data-aos="fade-left">
+                        <h3>Track & Adapt</h3>
+                        <p>Follow your personalized plan with continuous updates based on your progress and changing industry demands.</p>
+                        <div class="timeline-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5" data-aos="fade-up">
+                <a href="pages/assessment.html" class="btn btn-primary btn-lg">Start Your Assessment Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5" data-aos="fade-right">
+                    <div class="section-header">
+                        <h2>See It In Action</h2>
+                        <p class="section-subtitle">Try our interactive demo to experience the AI guidance system</p>
+                    </div>
+                    <div class="demo-features">
+                        <div class="demo-feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Explore sample profiles and recommendations</span>
+                        </div>
+                        <div class="demo-feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>View personalized training paths</span>
+                        </div>
+                        <div class="demo-feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>See career progression maps</span>
+                        </div>
+                    </div>
+                    <a href="pages/demo.html" class="btn btn-secondary btn-lg mt-4">Try Interactive Demo</a>
+                </div>
+                <div class="col-lg-7" data-aos="fade-left">
+                    <div class="demo-preview">
+                        <div class="demo-preview-container">
+                            <img src="assets/images/dashboard.svg" alt="AI System Dashboard Preview" class="img-fluid">
+                            <div class="demo-preview-overlay">
+                                <div class="play-button" id="demoVideoButton">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <h2>Success Stories</h2>
+                <p class="section-subtitle">Hear from learners who transformed their careers with our guidance</p>
+            </div>
+            
+            <div class="testimonials-carousel" data-aos="fade-up">
+                <div class="row g-4">
+                    <div class="col-md-4 d-flex">
+                        <div class="testimonial-card flex-fill">
+                            <div class="testimonial-image">
+                                <img src="assets/images/testimonial-1.svg" alt="User Testimonial">
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p>"The AI guidance system helped me transition from a traditional manufacturing role to an advanced CNC machining career. The personalized pathway was exactly what I needed!"</p>
+                                <h4>Rajesh Kumar</h4>
+                                <p class="designation">CNC Specialist, Pune</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 d-flex">
+                        <div class="testimonial-card flex-fill">
+                            <div class="testimonial-image">
+                                <img src="assets/images/testimonial-2.svg" alt="User Testimonial">
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p>"As someone from a rural background, I didn't know which skills would help me find employment. This system guided me through healthcare assistant training that landed me a secure job."</p>
+                                <h4>Priya Sharma</h4>
+                                <p class="designation">Healthcare Assistant, Jaipur</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 d-flex">
+                        <div class="testimonial-card flex-fill">
+                            <div class="testimonial-image">
+                                <img src="assets/images/testimonial-3.svg" alt="User Testimonial">
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <p>"I was confused about which IT specialization to pursue. The AI system analyzed my strengths and recommended a cybersecurity pathway that matched perfectly with my analytical abilities."</p>
+                                <h4>Arjun Mehta</h4>
+                                <p class="designation">Cybersecurity Analyst, Bangalore</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About NCVET Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="about-image">
+                        <img src="assets/images/ncvet-logo.svg" alt="NCVET Logo" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="section-header">
+                        <h2>About NCVET</h2>
+                        <p class="section-subtitle">National Council for Vocational Education and Training</p>
+                    </div>
+                    <p class="about-text">
+                        As the national regulator for India's vocational education and training ecosystem, NCVET is committed to ensuring quality and standardization in skill development across the country. Our mission is to bridge the gap between education and employment by providing robust frameworks that align with industry needs.
+                    </p>
+                    <p class="about-text">
+                        The AI-powered guidance system is part of our initiative to democratize access to quality vocational training and ensure that every learner can navigate their unique pathway to success in alignment with the National Skills Qualifications Framework (NSQF).
+                    </p>
+                    <a href="https://www.ncvet.gov.in" target="_blank" class="btn btn-outline-primary mt-3">Visit Official Website</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content text-center" data-aos="zoom-in">
+                <h2>Ready to Begin Your Journey?</h2>
+                <p>Take the first step toward a personalized vocational training pathway that aligns with your aspirations and industry demands.</p>
+                <a href="pages/assessment.html" class="btn btn-primary btn-lg mt-4">Start Free Assessment</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-about">
+                        <div class="footer-logo d-flex align-items-center">
+                            <div class="logo-icon">
+                                <i class="fas fa-road"></i>
+                            </div>
+                            <span>SkillPath Navigator</span>
+                        </div>
+                        <p>An AI-powered vocational guidance system developed for NCVET to help learners discover personalized training pathways.</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#how-it-works">How It Works</a></li>
+                            <li><a href="#testimonials">Success Stories</a></li>
+                            <li><a href="#about">About NCVET</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">NSQF Framework</a></li>
+                            <li><a href="#">Career Guides</a></li>
+                            <li><a href="#">Training Centers</a></li>
+                            <li><a href="#">Certification Bodies</a></li>
+                            <li><a href="#">Industry Partners</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="footer-contact">
+                        <h4>Contact Us</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> NCVET Headquarters, New Delhi, India</p>
+                        <p><i class="fas fa-phone"></i> +91 11 2345 6789</p>
+                        <p><i class="fas fa-envelope"></i> support@skillpath.ncvet.gov.in</p>
+                        <div class="newsletter">
+                            <h5>Subscribe to Updates</h5>
+                            <form>
+                                <div class="input-group">
+                                    <input type="email" class="form-control" placeholder="Enter your email">
+                                    <button class="btn btn-primary" type="submit"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>&copy; 2025 SkillPath Navigator. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="footer-bottom-links">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div class="modal fade" id="demoVideoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">SkillPath Navigator Demo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/PhJxkIKqphU" title="Vocational Training Demo Video" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

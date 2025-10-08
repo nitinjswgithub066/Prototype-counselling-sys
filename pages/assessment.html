@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Assessment | SkillPath Navigator</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        /* Assessment page specific styles */
+        .assessment-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+            margin: 40px 0;
+        }
+        
+        .assessment-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-section {
+            display: none;
+        }
+        
+        .form-section:first-child {
+            display: block;
+        }
+        
+        .form-progress {
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .form-progress-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: -25px;
+            right: 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .form-section-title {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 1.5rem;
+        }
+        
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .validation-error {
+            display: none;
+            color: #dc3545;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        .form-check-label {
+            cursor: pointer;
+        }
+        
+        /* Results page styles */
+        .results-container {
+            display: none;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+            margin: 40px 0;
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .results-header h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .user-profile-card {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .user-profile-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .user-profile-detail {
+            background-color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .user-profile-detail i {
+            color: var(--primary-color);
+            margin-right: 8px;
+        }
+        
+        .career-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .career-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .career-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+        
+        .career-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .career-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0;
+        }
+        
+        .nsqf-level {
+            background-color: #e9f5ff;
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .career-scores {
+            margin: 20px 0;
+        }
+        
+        .score-item {
+            margin-bottom: 15px;
+        }
+        
+        .score-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .chart-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-title {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <div class="logo-icon">
+                    <i class="fas fa-road"></i>
+                </div>
+                <span>SkillPath Navigator</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#testimonials">Success Stories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#about">About NCVET</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="assessment.html">Assessment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="demo.html">Demo</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-primary nav-btn" href="login.html">Login / Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1>Skills Assessment</h1>
+                    <p class="lead">Complete this assessment to receive personalized vocational training recommendations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assessment Form Section -->
+    <section class="assessment-section">
+        <div class="container">
+            <!-- Assessment Form -->
+            <div id="assessmentContainer" class="assessment-container">
+                <div class="assessment-header">
+                    <h2>Your Personalized Assessment</h2>
+                    <p>Please provide accurate information to help our AI generate the most suitable recommendations for you.</p>
+                </div>
+                
+                <div class="form-progress">
+                    <div class="form-progress-bar" style="width: 25%"></div>
+                    <span class="progress-text">1 / 4</span>
+                </div>
+                
+                <form id="assessmentForm">
+                    <!-- Section 1: Personal Information -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-user me-2"></i> Personal Information
+                        </h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fullName" class="form-label">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="fullName" required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="dateOfBirth" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="dateOfBirth" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="gender" class="form-label">Gender</label>
+                                <select class="form-select" id="gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                    <option value="prefer-not">Prefer not to say</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="location" class="form-label">Current Location <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="location" required>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-danger validation-error">
+                            Please fill in all required fields.
+                        </div>
+                        
+                        <div class="form-buttons">
+                            <div></div> <!-- Empty div for spacing -->
+                            <button type="button" class="btn btn-primary next-step">Next: Education Background <i class="fas fa-arrow-right ms-2"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 2: Education Background -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-graduation-cap me-2"></i> Education Background
+                        </h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="educationLevel" class="form-label">Highest Level of Education <span class="text-danger">*</span></label>
+                                <select class="form-select" id="educationLevel" required>
+                                    <option value="">Select Education Level</option>
+                                    <option value="Below 10th">Below 10th Standard</option>
+                                    <option value="10th Standard">10th Standard</option>
+                                    <option value="12th Standard">12th Standard</option>
+                                    <option value="Diploma">Diploma</option>
+                                    <option value="ITI">ITI</option>
+                                    <option value="Bachelor's Degree">Bachelor's Degree</option>
+                                    <option value="Master's Degree">Master's Degree</option>
+                                    <option value="PhD">PhD or higher</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="specialization" class="form-label">Field/Specialization</label>
+                                <input type="text" class="form-control" id="specialization" placeholder="E.g., Science, Commerce, Engineering">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="yearOfCompletion" class="form-label">Year of Completion</label>
+                                <select class="form-select" id="yearOfCompletion">
+                                    <option value="">Select Year</option>
+                                    <option value="Currently Studying">Currently Studying</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2015">2015</option>
+                                    <option value="Before 2015">Before 2015</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="institution" class="form-label">Institution/School Name</label>
+                                <input type="text" class="form-control" id="institution">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label d-block">Do you have any vocational certifications or training?</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hasCertifications" id="hasCertificationsYes" value="yes">
+                                <label class="form-check-label" for="hasCertificationsYes">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hasCertifications" id="hasCertificationsNo" value="no" checked>
+                                <label class="form-check-label" for="hasCertificationsNo">No</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 certification-details" style="display: none;">
+                            <label for="certificationDetails" class="form-label">Please provide details of your certifications</label>
+                            <textarea class="form-control" id="certificationDetails" rows="3" placeholder="Name of certification, issuing organization, year of completion"></textarea>
+                        </div>
+                        
+                        <div class="alert alert-danger validation-error">
+                            Please fill in all required fields.
+                        </div>
+                        
+                        <div class="form-buttons">
+                            <button type="button" class="btn btn-outline-secondary prev-step"><i class="fas fa-arrow-left me-2"></i> Previous</button>
+                            <button type="button" class="btn btn-primary next-step">Next: Skills & Experience <i class="fas fa-arrow-right ms-2"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 3: Skills & Experience -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-tools me-2"></i> Skills & Experience
+                        </h3>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Rate your technical skills in the following areas:</label>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Computer/Digital Skills</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="computerSkills" id="computerSkills1" value="1">
+                                    <label class="form-check-label" for="computerSkills1">Beginner</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="computerSkills" id="computerSkills2" value="2">
+                                    <label class="form-check-label" for="computerSkills2">Elementary</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="computerSkills" id="computerSkills3" value="3">
+                                    <label class="form-check-label" for="computerSkills3">Intermediate</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="computerSkills" id="computerSkills4" value="4">
+                                    <label class="form-check-label" for="computerSkills4">Advanced</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="computerSkills" id="computerSkills5" value="5">
+                                    <label class="form-check-label" for="computerSkills5">Expert</label>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Language & Communication Skills</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="communicationSkills" id="communicationSkills1" value="1">
+                                    <label class="form-check-label" for="communicationSkills1">Beginner</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="communicationSkills" id="communicationSkills2" value="2">
+                                    <label class="form-check-label" for="communicationSkills2">Elementary</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="communicationSkills" id="communicationSkills3" value="3">
+                                    <label class="form-check-label" for="communicationSkills3">Intermediate</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="communicationSkills" id="communicationSkills4" value="4">
+                                    <label class="form-check-label" for="communicationSkills4">Advanced</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="communicationSkills" id="communicationSkills5" value="5">
+                                    <label class="form-check-label" for="communicationSkills5">Expert</label>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Mechanical/Technical Skills</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mechanicalSkills" id="mechanicalSkills1" value="1">
+                                    <label class="form-check-label" for="mechanicalSkills1">Beginner</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mechanicalSkills" id="mechanicalSkills2" value="2">
+                                    <label class="form-check-label" for="mechanicalSkills2">Elementary</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mechanicalSkills" id="mechanicalSkills3" value="3">
+                                    <label class="form-check-label" for="mechanicalSkills3">Intermediate</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mechanicalSkills" id="mechanicalSkills4" value="4">
+                                    <label class="form-check-label" for="mechanicalSkills4">Advanced</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mechanicalSkills" id="mechanicalSkills5" value="5">
+                                    <label class="form-check-label" for="mechanicalSkills5">Expert</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="workExperience" class="form-label">Do you have any work experience?</label>
+                            <select class="form-select" id="workExperience">
+                                <option value="none">No experience</option>
+                                <option value="less-than-1">Less than 1 year</option>
+                                <option value="1-3">1-3 years</option>
+                                <option value="3-5">3-5 years</option>
+                                <option value="more-than-5">More than 5 years</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3 work-details" style="display: none;">
+                            <label for="workDetails" class="form-label">Please provide brief details of your work experience</label>
+                            <textarea class="form-control" id="workDetails" rows="3" placeholder="Job titles, companies, duration, and main responsibilities"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="additionalSkills" class="form-label">List any additional skills or talents you possess</label>
+                            <textarea class="form-control" id="additionalSkills" rows="2" placeholder="E.g., leadership, teamwork, problem-solving, creativity"></textarea>
+                        </div>
+                        
+                        <div class="alert alert-danger validation-error">
+                            Please fill in all required fields.
+                        </div>
+                        
+                        <div class="form-buttons">
+                            <button type="button" class="btn btn-outline-secondary prev-step"><i class="fas fa-arrow-left me-2"></i> Previous</button>
+                            <button type="button" class="btn btn-primary next-step">Next: Career Aspirations <i class="fas fa-arrow-right ms-2"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 4: Career Aspirations -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-chart-line me-2"></i> Career Aspirations
+                        </h3>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Select sectors you are interested in (select up to 3):</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" name="sectors" id="sectorIT" value="IT">
+                                        <label class="form-check-label" for="sectorIT">Information Technology</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" name="sectors" id="sectorHealthcare" value="Healthcare">
+                                        <label class="form-check-label" for="sectorHealthcare">Healthcare</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" name="sectors" id="sectorManufacturing" value="Manufacturing">
+                                        <label class="form-check-label" for="sectorManufacturing">Manufacturing</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" name="sectors" id="sectorHospitality" value="Hospitality">
+                                        <label class="form-check-label" for="sectorHospitality">Hospitality & Tourism</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" name="sectors" id="sectorRetail" value="Retail">
+                                        <label class="form-check-label" for="sectorRetail">Retail & E-commerce</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" name="sectors" id="sectorAgriculture" value="Agriculture">
+                                        <label class="form-check-label" for="sectorAgriculture">Agriculture & Food Processing</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" name="sectors" id="sectorConstruction" value="Construction">
+                                        <label class="form-check-label" for="sectorConstruction">Construction</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" name="sectors" id="sectorAutomotive" value="Automotive">
+                                        <label class="form-check-label" for="sectorAutomotive">Automotive</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" name="sectors" id="sectorOther" value="Other">
+                                        <label class="form-check-label" for="sectorOther">Other</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="careerGoals" class="form-label">What are your short-term career goals? (1-2 years) <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="careerGoals" rows="2" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="longTermGoals" class="form-label">What are your long-term aspirations? (5+ years)</label>
+                            <textarea class="form-control" id="longTermGoals" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">What is your preferred mode of learning?</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="learningMode" id="learningMode1" value="classroom">
+                                <label class="form-check-label" for="learningMode1">Classroom-based training</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="learningMode" id="learningMode2" value="online">
+                                <label class="form-check-label" for="learningMode2">Online courses</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="learningMode" id="learningMode3" value="hybrid">
+                                <label class="form-check-label" for="learningMode3">Hybrid (Mix of online and classroom)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="learningMode" id="learningMode4" value="onthejob">
+                                <label class="form-check-label" for="learningMode4">On-the-job training</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="learningMode" id="learningMode5" value="self">
+                                <label class="form-check-label" for="learningMode5">Self-paced learning</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="locationPreference" class="form-label">What is your location preference for work?</label>
+                            <select class="form-select" id="locationPreference">
+                                <option value="">Select Preference</option>
+                                <option value="local">Within current city/district only</option>
+                                <option value="state">Anywhere within the state</option>
+                                <option value="country">Anywhere in India</option>
+                                <option value="international">Open to international opportunities</option>
+                                <option value="remote">Remote work only</option>
+                            </select>
+                        </div>
+                        
+                        <div class="alert alert-danger validation-error">
+                            Please fill in all required fields.
+                        </div>
+                        
+                        <div class="form-buttons">
+                            <button type="button" class="btn btn-outline-secondary prev-step"><i class="fas fa-arrow-left me-2"></i> Previous</button>
+                            <button type="submit" class="btn btn-success">Submit Assessment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Results Container (initially hidden) -->
+            <div id="resultsContainer" class="results-container">
+                <div class="results-header">
+                    <h1>Your Personalized Career Pathway</h1>
+                    <p>Based on your assessment, we've identified the following recommendations tailored to your profile.</p>
+                </div>
+                
+                <div class="user-profile-card">
+                    <h3>Your Profile Summary</h3>
+                    <div class="user-profile-details">
+                        <div class="user-profile-detail">
+                            <i class="fas fa-user"></i>
+                            <span id="userProfileName">Rahul Sharma</span>
+                        </div>
+                        <div class="user-profile-detail">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span id="userProfileEducation">12th Standard (Science)</span>
+                        </div>
+                        <div class="user-profile-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="userProfileLocation">Mumbai</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h4 class="chart-title">Your Skill Assessment</h4>
+                            <canvas id="skillsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h4 class="chart-title">Industry Demand & Growth Potential</h4>
+                            <canvas id="industryDemandChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="mb-4">Recommended Career Paths</h3>
+                
+                <div class="row" id="careerPathsContainer">
+                    <!-- Career path cards will be added here by JavaScript -->
+                </div>
+                
+                <div class="text-center mt-5">
+                    <a href="dashboard.html" class="btn btn-primary btn-lg">Save Results & Explore Further</a>
+                    <a href="#" class="btn btn-outline-secondary btn-lg ms-3" onclick="window.print();">Print Results</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-about">
+                        <div class="footer-logo d-flex align-items-center">
+                            <div class="logo-icon">
+                                <i class="fas fa-road"></i>
+                            </div>
+                            <span>SkillPath Navigator</span>
+                        </div>
+                        <p>An AI-powered vocational guidance system developed for NCVET to help learners discover personalized training pathways.</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="../index.html#features">Features</a></li>
+                            <li><a href="../index.html#how-it-works">How It Works</a></li>
+                            <li><a href="../index.html#testimonials">Success Stories</a></li>
+                            <li><a href="../index.html#about">About NCVET</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">NSQF Framework</a></li>
+                            <li><a href="#">Career Guides</a></li>
+                            <li><a href="#">Training Centers</a></li>
+                            <li><a href="#">Certification Bodies</a></li>
+                            <li><a href="#">Industry Partners</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="footer-contact">
+                        <h4>Contact Us</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> NCVET Headquarters, New Delhi, India</p>
+                        <p><i class="fas fa-phone"></i> +91 11 2345 6789</p>
+                        <p><i class="fas fa-envelope"></i> support@skillpath.ncvet.gov.in</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>&copy; 2025 SkillPath Navigator. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="footer-bottom-links">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="../assets/js/main.js"></script>
+    
+    <script>
+        // Initialize AOS Animation
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Toggle certification details
+        document.querySelectorAll('input[name="hasCertifications"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const certDetails = document.querySelector('.certification-details');
+                if (this.value === 'yes') {
+                    certDetails.style.display = 'block';
+                } else {
+                    certDetails.style.display = 'none';
+                }
+            });
+        });
+        
+        // Toggle work experience details
+        document.getElementById('workExperience').addEventListener('change', function() {
+            const workDetails = document.querySelector('.work-details');
+            if (this.value !== 'none') {
+                workDetails.style.display = 'block';
+            } else {
+                workDetails.style.display = 'none';
+            }
+        });
+        
+        // Limit sector selection to max 3
+        const sectorCheckboxes = document.querySelectorAll('input[name="sectors"]');
+        sectorCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const checked = document.querySelectorAll('input[name="sectors"]:checked');
+                if (checked.length > 3) {
+                    this.checked = false;
+                    alert('You can select a maximum of 3 sectors.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
